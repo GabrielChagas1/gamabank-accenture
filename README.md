@@ -6,7 +6,7 @@
 
 Nosso momento é de cada vez mais aprender sobre como administrar nosso patriminio pois como diz o ditado "não tá facil pra ninguém", não é mesmo ? Sendo assim, queremos começar não só querer cuidar do nosso dinheiro, mas do seu também. Criamos a Gama Bank para ser uma fintech diferente e que seja acima de tudo capaz de transformar a vida das pessoas e suas carreiras (sacoou?)
 
-## Nosso time, seu projeto de vida !
+## Nosso time, seu projeto de vida!
 
 Ainda estamos em desenvolvimento e você juntamente com seu time deverão ser capazes de construir nosso MVP (Minimo Produto Viavel) e garantir que possamos disponibilizar para o time de frontend a implementação dessa solução, que para nós, será um divisor de aguas na sua carreira (sacoou?)
 
@@ -36,13 +36,3 @@ Construir uma aplicação web, utilizando Node.js e todas as bibliotecas e tecno
 3. Realizou transferencia entre conta existes e/ou inexistentes
 4. Realizou lançamentos de compras feitas com crédito e débito
 5. Realizou envio de email confirmando o lançamento de crédito ou débito para o email do usuario
-6. Exibiu o extrato bancário e fatura de crédito
-
-
-
-
-
-
-
-
-
