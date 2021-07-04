@@ -1,0 +1,251 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Api criada durante a gama Academy Accenture 2.0 pelo grupo EventLoop",
+    "version": "1.0.0",
+    "title": "Gamabank EventLoop",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": ".",
+  "basePath": "/v2",
+  "tags": [
+    {
+      "name": "users",
+      "description": "Criação de conta  do usuário",
+      "externalDocs": {
+        "description": "Criação de conta do usuário",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "accounts",
+      "description": "Criação da conta bancária do usuário",
+      "externalDocs": {
+        "description": "Criação da conta bancária do usuário",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "transactions",
+      "description": "transações",
+      "externalDocs": {
+        "description": "transação interna",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "sessions",
+      "description": "Sessão do usuário",
+      "externalDocs": {
+        "description": "Sessão do usuário iniciada",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": ["https", "http"],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Criação do usuário",
+        "description": "Criação de uma conta para o usuário",
+        "operationId": "userController.js",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/sessions": {
+      "post": {
+        "tags": ["sessions"],
+        "summary": "sessão do usuário",
+        "description": "Criação da sessão de um usuário",
+        "operationId": "sessionController.js",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The user name for login",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Sessions"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "A senha para login",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário logado",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "X-Rate-Limit": {
+                "type": "integer",
+                "format": "int32",
+                "description": "calls per hour allowed by the user"
+              },
+              "X-Expires-After": {
+                "type": "string",
+                "format": "date-time",
+                "description": "date in UTC when token expires"
+              }
+            }
+          },
+          "400": {
+            "description": "Senha inválida"
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "post": {
+        "tags": ["transactions"],
+        "summary": "Transferência interna",
+        "description": "Transferencia interna",
+        "operationId": "InternTransferController.store",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/transactionsIntern"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaferência feita com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": [
+                {
+                  "account_id": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Não obteve sucesso na transferência",
+            "schema": {
+              "type": "object",
+              "properties": [
+                {
+                  "account_id": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "full_name": {
+          "type": "string"
+        },
+        "user_name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Sessions": {
+      "type": "object",
+      "properties": {
+        "user_email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    }
+  },
+  "transactionsIntern": {
+    "type": "object",
+    "properties": {
+      "account_id": {
+        "type": "integer"
+      },
+       "transaction_value": {
+        "type": "number"
+       },
+       "target_account_id": {
+         "type": "integer"
+       },
+       "target_user_name": {
+         "type": "string"
+       },
+       "taget_cpf": {
+         "type": "string"
+       }       
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
